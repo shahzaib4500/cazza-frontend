@@ -16,6 +16,10 @@ import { SupportSettings } from "./pages/Settings/SupportSettings";
 import { AccountSettings } from "./pages/Settings/AccountSettings";
 import { TeamSettings } from "./pages/Settings/TeamSettings";
 import { Onboarding } from "./pages/auth/OnBoarding";
+import { SuperAdminLayout } from "./layouts/SuperAdminLayout";
+import { AdminDashboard } from "./pages/SuperAdmin/AdminDashboard";
+import { AdminUsers } from "./pages/SuperAdmin/AdminUsers";
+import { AdminSupport } from "./pages/SuperAdmin/AdminSupport";
 
 const App = () => {
   return (
@@ -39,6 +43,11 @@ const App = () => {
               <Route path="support" element={<SupportSettings />} />
               <Route path="settings" element={<AccountSettings />} />
               <Route path="teams" element={<TeamSettings />} />
+            </Route>
+            <Route path="/superadmin" element={<SuperAdminLayout />}>
+              <Route index path="dashboard" element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="customer-support" element={<AdminSupport />} />
             </Route>
           </Routes>
         </BrowserRouter>
