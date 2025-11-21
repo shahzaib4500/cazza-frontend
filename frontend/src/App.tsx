@@ -4,6 +4,7 @@ import { SetNewPassword } from "./pages/auth/SetNewPassword";
 import { SignIn } from "./pages/auth/SignIn";
 import { SignUp } from "./pages/auth/SignUp";
 import { GoogleCallback } from "./pages/auth/GoogleCallback";
+import { SubscriptionCallback } from "./pages/auth/SubscriptionCallback";
 import { DataProtection } from "./pages/auth/Term and Conditions/DataProtection";
 import NotFound from "./pages/NotFound";
 import { LandingPage } from "./pages/landingPage/LandingPage";
@@ -55,6 +56,7 @@ const App = () => {
             {/* Private routes that require authentication */}
             <Route element={<PrivateRoute/>}>
             <Route path="/onboarding" element={<Onboarding />}/>
+            <Route path="/subscription/callback" element={<SubscriptionCallback />} />
             <Route path="/client" element={<ClientLayout />}>
               <Route index element={<ClientDashboard />} />
               <Route path="platforms" element={<ClientPlatforms />} />

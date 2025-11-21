@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,7 +76,8 @@ const roles = [
 export const TeamSettings = () => {
   const { user: currentUser } = useUserStore();
   const { showToast } = useToast();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const {
     members,
     invitations,
@@ -95,26 +96,14 @@ export const TeamSettings = () => {
   const [memberIntervals, setMemberIntervals] = useState<Record<string, "monthly" | "yearly">>({});
   const [payingForMemberId, setPayingForMemberId] = useState<string | null>(null);
 
-  // Check for payment success/failure message in URL
+  // Check for payment success/failure message in URL (fallback for direct navigation)
   useEffect(() => {
     const message = searchParams.get("message");
     if (message) {
-      // Show toast first
-      if (message === "success") {
-        showToast("Payment successful! Team member subscription is now active.", "success");
-      } else {
-        showToast("Payment failed. Please try again.", "error");
-      }
-      
-      // Remove query parameter from URL without causing navigation/re-render
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete("message");
-      setSearchParams(newSearchParams, { replace: true });
-      
-      // Refresh team data to get updated subscription status
-      fetchAllTeamData();
+      // Redirect to callback page for proper handling
+      navigate(`/subscription/callback?message=${message}&type=team`, { replace: true });
     }
-  }, [searchParams, setSearchParams, showToast, fetchAllTeamData]);
+  }, [searchParams, navigate]);
 
   // Fetch team data on mount
   useEffect(() => {
