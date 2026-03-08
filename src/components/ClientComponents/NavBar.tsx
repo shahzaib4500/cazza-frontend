@@ -120,29 +120,6 @@ export const NavBar = ({ onNavigate }: ClientSidebarProps) => {
               </Button>
             </Link>
           </div>
-
-          <div
-            ref={(el) => {
-              iconRefs.current["blog"] = el;
-            }}
-            className="relative"
-            onMouseEnter={() => setHoveredItem("blog")}
-            onMouseLeave={() => setHoveredItem(null)}
-          >
-            <Link to="/blog" onClick={onNavigate} className="block">
-              <Button
-                variant="ghost"
-                size="icon"
-                className={`w-10 h-10 rounded-lg transition-all duration-300 hover:scale-110 ${
-                  location.pathname === "/blog" || location.pathname.startsWith("/blog/")
-                    ? "bg-primary text-primary-foreground shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-              >
-                <FileText className="w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </ScrollArea>
 
