@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 import { useToast } from "@/components/ToastProvider";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 import {
   createChatGroupService,
   getUserChatGroupsService,
@@ -30,13 +31,7 @@ export const useChat = () => {
       throw new Error("Invalid response from server");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        let errorMessage = error.response?.data?.message || "Failed to create channel";
-
-        // Handle validation errors more specifically
-        if (error.response?.data?.errors && Array.isArray(error.response.data.errors)) {
-          const validationMessages = error.response.data.errors.map((err: any) => err.message || err.msg).join(", ");
-          errorMessage = validationMessages || errorMessage;
-        }
+        let errorMessage = getApiErrorMessage(error, "Failed to create channel");
 
         // Check for description length validation specifically
         if (errorMessage.toLowerCase().includes("description") && errorMessage.toLowerCase().includes("characters")) {

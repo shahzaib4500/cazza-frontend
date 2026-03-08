@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 import { useToast } from "@/components/ToastProvider";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 import
 {
   forgotPasswordService,
@@ -78,9 +79,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "An error occurred during sign in";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred during sign in"), "error");
       } else if (error instanceof Error)
       {
         showToast(error.message, "error");
@@ -106,28 +105,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const responseData = error.response?.data;
-        let errorMessage = "An error occurred during signup";
-
-        // Check if backend returned detailed validation errors
-        if (responseData?.errors && Array.isArray(responseData.errors) && responseData.errors.length > 0)
-        {
-          // Extract all error messages from the errors array
-          const errorMessages = responseData.errors.map((err: { message?: string; }) => err.message).filter(Boolean);
-
-          if (errorMessages.length > 0)
-          {
-            errorMessage = errorMessages.join(". ");
-          }
-        } else if (responseData?.message)
-        {
-          errorMessage = responseData.message;
-        } else if (responseData?.error)
-        {
-          errorMessage = responseData.error;
-        }
-
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred during signup"), "error");
       } else
       {
         showToast("An unexpected error occurred. Please try again.", "error");
@@ -153,8 +131,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const errorMessage = error.response?.data?.message || error.response?.data?.error || "An error occurred";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred"), "error");
       } else if (error instanceof Error)
       {
         showToast(error.message, "error");
@@ -183,8 +160,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const errorMessage = error.response?.data?.message || error.response?.data?.error || "An error occurred";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred"), "error");
       } else if (error instanceof Error)
       {
         showToast(error.message, "error");
@@ -212,8 +188,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const errorMessage = error.response?.data?.message || error.response?.data?.error || "An error occurred";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred"), "error");
       } else
       {
         showToast("An unexpected error occurred. Please try again.", "error");
@@ -255,11 +230,7 @@ export const useauth = () =>
     {
       if (error instanceof AxiosError)
       {
-        const responseData = error.response?.data;
-        // Display the actual API error message
-        const errorMessage =
-          responseData?.message || responseData?.error || "An error occurred during Google authentication";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "An error occurred during Google authentication"), "error");
       } else if (error instanceof Error)
       {
         showToast(error.message, "error");

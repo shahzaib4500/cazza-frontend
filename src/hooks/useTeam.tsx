@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { useCallback } from "react";
 
 import { useToast } from "@/components/ToastProvider";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 import {
   getTeamInvitationsService,
   getMyInvitationsService,
@@ -54,9 +55,7 @@ export const useTeam = () => {
           return [];
         }
         console.error("Fetch invitations error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch invitations";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch invitations"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -102,9 +101,7 @@ export const useTeam = () => {
           return [];
         }
         console.error("Fetch team members error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch team members";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch team members"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -147,9 +144,7 @@ export const useTeam = () => {
           return null;
         }
         console.error("Fetch team analytics error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch team analytics";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch team analytics"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -197,15 +192,13 @@ export const useTeam = () => {
           return [];
         }
         if (status === 500) {
-          console.error("Fetch team members error:", error);
-          showToast("Unable to load team members. Please try again later.", "error");
+        console.error("Fetch team members error:", error);
+        showToast("Unable to load team members. Please try again later.", "error");
           setMembers([]);
           return [];
         }
         console.error("Fetch team members error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch team members";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch team members"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -242,15 +235,13 @@ export const useTeam = () => {
           return [];
         }
         if (status === 500) {
-          console.error("Fetch invitations error:", error);
-          showToast("Unable to load invitations. Please try again later.", "error");
+        console.error("Fetch invitations error:", error);
+        showToast("Unable to load invitations. Please try again later.", "error");
           setInvitations([]);
           return [];
         }
         console.error("Fetch invitations error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch invitations";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch invitations"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -289,9 +280,7 @@ export const useTeam = () => {
           return null;
         }
         console.error("Fetch team analytics error:", error);
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch team analytics";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch team analytics"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -318,9 +307,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Cancel invitation error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to cancel invitation";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to cancel invitation"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -348,9 +335,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Remove team member error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to remove team member";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to remove team member"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -382,9 +367,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Update team member role error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to update team member role";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to update team member role"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -409,9 +392,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Get my invitations error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch invitations";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch invitations"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -439,9 +420,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Accept invitation error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to accept invitation";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to accept invitation"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -472,9 +451,7 @@ export const useTeam = () => {
     } catch (error: unknown) {
       console.error("Team member subscription error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to initiate subscription checkout";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to initiate subscription checkout"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {

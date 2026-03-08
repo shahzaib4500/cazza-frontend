@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { AxiosError } from "axios";
 
 import { useToast } from "@/components/ToastProvider";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 import { checkLoggedInService } from "@/services/authService";
 import { inviteTeamMemberService } from "@/services/teamService";
 import {
@@ -92,9 +93,7 @@ export const useUser = () => {
         if (status === 404 && (msg.includes("user not found") || msg.includes("removed"))) {
           return null;
         }
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch user profile";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch user profile"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -128,9 +127,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Onboarding error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to complete onboarding";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to complete onboarding"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -162,9 +159,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Update user error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to update personal information";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to update personal information"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -193,17 +188,7 @@ export const useUser = () => {
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        // Show specific validation errors if available
-        if (error.response?.data?.errors && Array.isArray(error.response.data.errors)) {
-          const validationMessages = error.response.data.errors
-            .map((err: any) => err.message || err.msg || JSON.stringify(err))
-            .join(", ");
-          showToast(`Validation error: ${validationMessages}`, "error");
-        } else {
-          const errorMessage =
-            error.response?.data?.message || error.response?.data?.error || "Failed to update business profile";
-          showToast(errorMessage, "error");
-        }
+        showToast(getApiErrorMessage(error, "Failed to update business profile"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -234,9 +219,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Invite team member error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to invite team member";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to invite team member"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -264,8 +247,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Delete user error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage = error.response?.data?.message || error.response?.data?.error || "Failed to delete account";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to delete account"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -296,9 +278,7 @@ export const useUser = () => {
           // Don't show error toast for 403 - it's expected for team members
           return null;
         }
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to fetch subscription";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to fetch subscription"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -328,9 +308,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Start subscription error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to start subscription";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to start subscription"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -356,9 +334,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Unsubscribe error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to cancel subscription";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to cancel subscription"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -390,9 +366,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Update profile image error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to update profile image";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to update profile image"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -419,9 +393,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Delete profile image error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to delete profile image";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to delete profile image"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
@@ -447,9 +419,7 @@ export const useUser = () => {
     } catch (error: unknown) {
       console.error("Create support ticket error:", error);
       if (error instanceof AxiosError) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.error || "Failed to create support ticket";
-        showToast(errorMessage, "error");
+        showToast(getApiErrorMessage(error, "Failed to create support ticket"), "error");
       } else if (error instanceof Error) {
         showToast(error.message, "error");
       } else {
