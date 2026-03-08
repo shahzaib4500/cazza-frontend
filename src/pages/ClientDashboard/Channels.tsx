@@ -432,6 +432,9 @@ export const Channels = () => {
       if (trimmedNewText === originalText) {
         setEditingMessageId(null);
         setEditingMessageText("");
+        if (messageInputRef.current) {
+          messageInputRef.current.style.height = "auto";
+        }
         return;
       }
 
@@ -448,6 +451,9 @@ export const Channels = () => {
       await updateDoc(messageRef, updateData);
       setEditingMessageId(null);
       setEditingMessageText("");
+      if (messageInputRef.current) {
+        messageInputRef.current.style.height = "auto";
+      }
     } catch (error) {}
   };
 
@@ -518,6 +524,9 @@ export const Channels = () => {
   const cancelEditMessage = () => {
     setEditingMessageId(null);
     setEditingMessageText("");
+    if (messageInputRef.current) {
+      messageInputRef.current.style.height = "auto";
+    }
   };
 
   const handleFormatClick = (format: string) => {
@@ -1125,6 +1134,9 @@ export const Channels = () => {
 
       setMessageInput("");
       setReplyingToMessage(null);
+      if (messageInputRef.current) {
+        messageInputRef.current.style.height = "auto";
+      }
     } catch (error: any) {
     } finally {
       setIsSendingMessage(false);
