@@ -2,7 +2,7 @@ const ENTITY_TYPE_TO_API: Record<string, string> = {
   "sole-trader": "sole_trader",
   partnership: "partnership",
   "limited-company": "limited_company",
-  llp: "llp",
+  llp: "limited_liability_partnership",
   charity: "charity",
   other: "other"
 };
@@ -14,10 +14,10 @@ const ENTITY_TYPE_FROM_API: Record<string, string> = Object.fromEntries(
 const REVENUE_BAND_TO_API: Record<string, string> = {
   "0-90k": "0_to_90000",
   "90k-750k": "90000_to_750000",
-  "750k-2m": "750000_to_2000000",
-  "2m-5m": "2000000_to_5000000",
-  "5m-10m": "5000000_to_10000000",
-  "10m+": "10000000_plus"
+  "750k-2m": "750000_to_2m",
+  "2m-5m": "2m_to_5m",
+  "5m-10m": "5m_to_10m",
+  "10m+": "10m_plus"
 };
 
 const REVENUE_BAND_FROM_API: Record<string, string> = Object.fromEntries(
