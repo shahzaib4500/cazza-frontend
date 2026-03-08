@@ -307,16 +307,12 @@ export const AccountSettings = () => {
         // Update business profile only
         const businessUpdatePayload = buildBusinessProfilePayload({
           businessName: businessName,
-          businessEntityType: formData.entityType || currentUser.businessProfile.businessEntityType,
-          annualRevenueBand: formData.revenueBand || currentUser.businessProfile.annualRevenueBand,
-          marketplaces:
-            formData.marketplaces?.length > 0
-              ? formData.marketplaces
-              : fromApiMarketplaces(currentUser.businessProfile.marketplaces || []),
-          tools:
-            formData.accountingStack.integrations?.length > 0
-              ? formData.accountingStack.integrations
-              : fromApiTools(currentUser.businessProfile.tools || [])
+          businessEntityType:
+            formData.entityType || fromApiEntityType(currentUser.businessProfile.businessEntityType || ""),
+          annualRevenueBand:
+            formData.revenueBand || fromApiRevenueBand(currentUser.businessProfile.annualRevenueBand || ""),
+          marketplaces: fromApiMarketplaces(currentUser.businessProfile.marketplaces || []),
+          tools: fromApiTools(currentUser.businessProfile.tools || [])
         });
 
         await updateBusinessProfile(businessUpdatePayload);
@@ -339,14 +335,11 @@ export const AccountSettings = () => {
     setSavingMarketplaces(true);
     try {
       const businessUpdatePayload = buildBusinessProfilePayload({
-        businessName: formData.businessName || currentUser.businessProfile.businessName,
-        businessEntityType: formData.entityType || currentUser.businessProfile.businessEntityType,
-        annualRevenueBand: formData.revenueBand || currentUser.businessProfile.annualRevenueBand,
+        businessName: currentUser.businessProfile.businessName || "",
+        businessEntityType: fromApiEntityType(currentUser.businessProfile.businessEntityType || ""),
+        annualRevenueBand: fromApiRevenueBand(currentUser.businessProfile.annualRevenueBand || ""),
         marketplaces: formData.marketplaces,
-        tools:
-          formData.accountingStack.integrations?.length > 0
-            ? formData.accountingStack.integrations
-            : fromApiTools(currentUser.businessProfile.tools || [])
+        tools: fromApiTools(currentUser.businessProfile.tools || [])
       });
 
       await updateBusinessProfile(businessUpdatePayload, "Marketplaces updated successfully");
@@ -363,14 +356,11 @@ export const AccountSettings = () => {
     setSavingTechStack(true);
     try {
       const businessUpdatePayload = buildBusinessProfilePayload({
-        businessName: formData.businessName || currentUser.businessProfile.businessName,
-        businessEntityType: formData.entityType || currentUser.businessProfile.businessEntityType,
-        annualRevenueBand: formData.revenueBand || currentUser.businessProfile.annualRevenueBand,
-        marketplaces:
-          formData.marketplaces?.length > 0
-            ? formData.marketplaces
-            : fromApiMarketplaces(currentUser.businessProfile.marketplaces || []),
-        tools: formData.accountingStack.integrations || fromApiTools(currentUser.businessProfile.tools || [])
+        businessName: currentUser.businessProfile.businessName || "",
+        businessEntityType: fromApiEntityType(currentUser.businessProfile.businessEntityType || ""),
+        annualRevenueBand: fromApiRevenueBand(currentUser.businessProfile.annualRevenueBand || ""),
+        marketplaces: fromApiMarketplaces(currentUser.businessProfile.marketplaces || []),
+        tools: formData.accountingStack.integrations || []
       });
 
       await updateBusinessProfile(businessUpdatePayload, "Tech stack updated successfully");
